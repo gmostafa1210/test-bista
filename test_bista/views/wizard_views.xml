@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- question 4 b -->
+
+<odoo>
+
+    <record id="view_wizard_filter_form" model="ir.ui.view" >
+        <field name="name">wizard.filter.form</field>
+        <field name="model">wizard.filter</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="customer_id" widget="many2many_tags"/>
+                        </group>
+                    </group>    
+                </sheet>
+                <!-- question 4 c -->
+                <footer>
+                    <button name="wizard_filter" string="view purchase orders" type="object" class="btn-success"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- question 4 a -->
+    <record id="action_wizard_filter" model="ir.actions.act_window" >
+        <field name="name">Wizard Filter</field>
+        <field name="res_model">wizard.filter</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem 
+        id="menu_wizard_filter" 
+        action="action_wizard_filter"
+        name="Filter Purchase Orders" 
+        parent="purchase.menu_procurement_management"
+        sequence="1"/>
+
+</odoo>

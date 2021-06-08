@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- question 2 -->
+
+<odoo>
+    
+    <record id='view_inherit_purchase_extend' model='ir.ui.view'>
+        <field name='name'>purchase.order.purchase.extend.inherit</field>
+        <field name='model'>purchase.order</field>
+        <field name='inherit_id' ref='purchase.purchase_order_form'/>
+        <field name='arch' type='xml'>
+            <xpath expr='//field[@name="partner_id"]' position='attributes'>
+                <attribute name='domain'>[('is_company','=',True)]</attribute>
+            </xpath>
+            <!-- question 2 a b -->
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="product_group_id" attrs="{'invisible': [('filter_group','=',False)],'required': [('filter_group','=',True)]}"/>
+            </xpath>
+            <!-- question 2 c -->
+            <xpath expr="//field[@name='product_group_id']" position="before">
+                <field name="filter_group"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position='after'>
+                <field name="rating_select" />                 
+            </xpath> 
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id='product_group_user_access' model='ir.module.category'>
+        <field name='name'>Bista Product Group</field>
+        <field name='sequence'>1</field>
+    </record>
+
+    <record id='product_group_user_access_purchase' model='res.groups'>
+        <field name='name'>Purchase User</field>
+        <field name='implied_ids' eval='[(4, ref("base.group_user"))]'/>
+        <field name='category_id' ref='test_bista.product_group_user_access'/>
+        <field name='users' eval='[(4, ref("base.user_admin"))]'/>
+    </record>
+
+    <record id='product_group_user_access_inventory' model='res.groups'>
+        <field name='name'>Inventory User</field>
+        <field name='implied_ids' eval='[(4, ref("base.group_user"))]'/>
+        <field name='category_id' ref='test_bista.product_group_user_access'/>
+        <field name='users' eval='[(4, ref("base.user_admin"))]'/>
+    </record>
+
+    <record id='product_group_user_access_administrator' model='res.groups'>
+        <field name='name'>Inventory Administrator</field>
+        <field name="implied_ids" eval="[(4, ref('test_bista.product_group_user_access_purchase')), (4, ref('test_bista.product_group_user_access_inventory'))]"/>
+        <field name='category_id' ref='test_bista.product_group_user_access'/>
+        <field name='users' eval='[(4, ref("base.user_admin"))]'/>
+    </record>
+
+</odoo>

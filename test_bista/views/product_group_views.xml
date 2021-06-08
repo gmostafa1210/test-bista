@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_bista_product_group_tree" model="ir.ui.view">
+        <field name="name">parent.group.tree</field>
+        <field name="model">parent.group</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="parent_group"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_bista_product_group_form" model="ir.ui.view">
+        <field name="name">parent.group.form</field>
+        <field name="model">parent.group</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="parent_group"/>
+                    </group>
+                    <notebook>
+                        <page string='Product Group'>
+                            <field name="product_group_line">
+                                <tree editable='bottom'>
+                                    <field name="name_id" required="True"/>
+                                    <field name="short_code" required="True"/>
+                                    <field name="product_group_id" invisible='1'/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="name_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="short_code"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_bista_product_group_parent_search" model="ir.ui.view">
+        <field name="name">parent.group.search</field>
+        <field name="model">parent.group</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="parent_group"/>
+            </search>
+        </field>
+    </record>
+
+    
+    
+    <record id='view_inherit_purchase_extend_sail' model='ir.ui.view'>
+        <field name='name'>sale.order.purchase.extend.inherit</field>
+        <field name='model'>sale.order</field>
+        <field name='inherit_id' ref='sale.view_order_form'/>
+        <field name='arch' type='xml'>
+            <xpath expr='//field[@name="partner_id"]' position='attributes'>
+                <attribute name='domain'>[('is_company','=',True)]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id='view_sale_product_inherit' model='ir.ui.view'>
+        <field name='name'>product.template.sale.product.inherit</field>
+        <field name='model'>product.template</field>
+        <field name='inherit_id' ref='product.product_template_only_form_view'/>
+        <field name='arch' type='xml'>
+            <xpath expr='//field[@name="default_code"]' position='before'>
+                <field name='group_ids'/>
+                <field name='rating' widget='radio' />
+            </xpath>
+        </field>
+    </record>
+
+    <record id='view_product_template_inherit_search' model='ir.ui.view'>
+        <field name='name'>product.template.inherit.search</field>
+        <field name='model'>product.template</field>
+        <field name='inherit_id' ref='product.product_template_search_view'/>
+        <field name='arch' type='xml'>
+            <xpath expr='//search' position='inside'>
+                <filter string='Rating' name='group_by_rating' context='{"group_by":"rating"}'/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_bista_product_group" model="ir.actions.act_window">
+        <field name="name">Parent Group</field>
+        <field name="res_model">parent.group</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem 
+        id='menu_bista_product_group_main'
+        name='Bista Product Group'/>
+
+    <menuitem 
+        id='menu_bista_product_group' 
+        action='action_bista_product_group' 
+        name='Parent Group'
+        parent='menu_bista_product_group_main'
+        sequence='1'/>
+
+    <menuitem 
+        id='menu_bista_product_group_stock' 
+        action='action_bista_product_group' 
+        name='Custom Parent Group'
+        parent='stock.menu_product_in_config_stock'
+        sequence='101'/>
+
+</odoo>
